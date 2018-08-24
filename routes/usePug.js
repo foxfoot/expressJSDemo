@@ -4,7 +4,6 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {//Added by foxfoot
         res.render('index', { title: 'Hey', message: 'Hello there! this is pug/jade' })  //render the index.pug file to html
-        //next();
     }
 )
 
@@ -15,9 +14,7 @@ router.get('/test', function(req, res, next){
 
     res.render('test', {
         pageTitle : 'test a new pug template',
-        youAreUsingPug : youAreUsingPug//,
-        //foo : true,
-        //bar : (a, b)=>a+b
+        youAreUsingPug : youAreUsingPug
     })
 })
 
