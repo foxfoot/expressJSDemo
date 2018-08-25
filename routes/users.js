@@ -32,12 +32,14 @@ router.get('/getUserInfo', (req, res, next) => {
     user.city = 'Oakville'
   }
 
-  var response = {
-    status : 200,
-    data : user
-  }
+  //old way. write the response by self -- including head and body
+  //res.writeHead(200, {"Content-Type": "application/json"});
+  //res.write(user);
+  //res.end();
+  
+  //res.end(JSON.stringify(user))
+  res.json(user);  //from Express 3.x
 
-  res.send(JSON.stringify(response))
 })
 
 module.exports = router;
