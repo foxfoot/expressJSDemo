@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 function readFile1(fileName, callback){
   fs.access(fileName, err => {
     if(err){
-      console.log('error when reading file ' +fileName + " error is: " + err);
+      console.error('error when reading file ' +fileName + " error is: " + err);
       callback(err);
       return;
     }
@@ -43,7 +43,7 @@ function readFile1(fileName, callback){
     })
 
     readStream.on('error', err => {
-      console.log('get an error: ' + err)
+      console.error('get an error: ' + err)
       callback(err);
     })
 
@@ -53,7 +53,7 @@ function readFile1(fileName, callback){
 function readFile2(fileName, res){
   fs.access(fileName, err => {
     if(err){
-      console.log('error when reading file ' +fileName + " error is: " + err);
+      console.error('error when reading file ' +fileName + " error is: " + err);
       res.status(500);
       res.json({error : err})
       return;
@@ -75,7 +75,7 @@ function readFile2(fileName, res){
     })
 
     readStream.on('error', err => {
-      console.log('get an error: ' + err)
+      console.error('get an error: ' + err)
       res.status(500);
       res.json({error : err})
     })
@@ -93,7 +93,7 @@ router.get('/getUserInfo', (req, res, next) => {
 
 /*  readFile1(fullFileName, function(e, data){  //CB as argument
     if(e){
-      console.log('error calling the readFile: ' + e);
+      console.error('error calling the readFile: ' + e);
       res.status(500);
       res.json({error : e})
     }else{
