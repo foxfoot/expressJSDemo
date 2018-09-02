@@ -85,8 +85,8 @@ function readFile2(fileName, res){
 
 router.get('/getUserInfo', (req, res, next) => {
   var user = new User();
-  var params = URL.parse(req.url, true).query;
-
+  //var params = URL.parse(req.url, true).query;
+  var params = req.query;
   var fileName = params.fileName || 'Tom';
   var fullFileName = 'data/' + fileName + '.json';
   console.log('param', fullFileName);
