@@ -6,7 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var usePugRouter = require('./routes/usePug')
+var usePugRouter = require('./routes/usePug');
+var staticRouter = require('./routes/static');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/testPug', usePugRouter);//Added by foxfoot
+app.use('/static', staticRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,5 +42,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
