@@ -1,11 +1,12 @@
 'use strict';
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var URL = require('url');
-var User = require('./model');
+const URL = require('url');
+const User = require('./model');
+const Joi = require('joi')
 
-var fs = require('fs');
+const fs = require('fs');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -83,7 +84,18 @@ function readFile2(fileName, res){
   })
 }
 
-router.get('/getUserInfo', (req, res, next) => {
+router.get('/userInfo', (req, res, next) => {
+  //use joi.js to verify the input
+  const schema = Joi.object().keys({
+    fileName: Joi.string().alphanum().min(3).max(30).required() //only accept fileName [3,30]
+  });
+
+  const {error} = Joi.validate(req.query, schema);
+  if(error){
+    res.status(400).send('Invalid parameter. Error: ' + error.details[0].message);
+    return;
+  }
+
   var user = new User();
   //var params = URL.parse(req.url, true).query;
   var params = req.query;
@@ -113,6 +125,26 @@ router.get('/getUserInfo', (req, res, next) => {
   //res.end(JSON.stringify(user))
 
 
+})
+
+router.post("/userInfo", function(req, res){
+  const schema = Joi.object().keys({
+    name: Joi.string().alphanum().min(3).max(30).required(), //only accept fileName [3,30]
+    age : Joi.number().min(0).max(150).required(),
+    city : Joi.string().alphanum().min(1).optional()
+  });
+
+  const {error} = Joi.validate(req.body, schema);
+  if(error){
+    res.status(400).send("Invalid parameter: " + error.details[0].message);
+  }
+
+  const obj = {
+    name : req.body.name,
+    age : req.body.age,
+    city : req.body.city || ""
+  }
+  res.json(obj);
 })
 
 module.exports = router;
